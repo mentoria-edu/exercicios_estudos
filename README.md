@@ -19,7 +19,7 @@ mentoria_edu/
 │   └── keplin.Dockerfile
 │   └── herison.Dockerfile
 │   └── danilo.Dockerfile
-│   └── danilo.Dockerfile
+│   └── felipe.Dockerfile
 │
 ├── README.md
 
@@ -32,11 +32,11 @@ mentoria_edu/
 
 ## :sunglasses: Participantes
 
-- [Keplin Dheison](https://github.com/keplinsousa)
-- [Danilo Lisboa](https://github.com/daanilol)
-- [Leonardo Adelmo](https://github.com/Leo-Adelmo)
-- [Felipe Freitas](https://github.com/Phill-Andrade)
-- [Marco]()
+- [Keplin](https://github.com/keplinsousa)
+- [Danilo](https://github.com/daanilol)
+- [Leonardo](https://github.com/Leo-Adelmo)
+- [Felipe](https://github.com/Phill-Andrade)
+- [Marco](https://github.com/marcosvieira08)
 - [Rerison](https://github.com/Rerison-git)
-- [Eduardo]()
-- [Luiz Vaz](https://github.com/luiz-vaz)
+- [Eduardo](https://github.com/eduardoliveirag)
+- [Luiz](https://github.com/luiz-vaz)
