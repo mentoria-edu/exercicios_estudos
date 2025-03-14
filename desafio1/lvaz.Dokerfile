@@ -12,4 +12,4 @@ EXPOSE 4277
 
 USER ubuntu
 
-CMD ["code-server","--bind-addr","0.0.0.0:4277","--auth", "none","--cert","false"]
+CMD ["code-server", "--bind-addr", "0.0.0.0:4277", "--auth", "none", "--cert", "false"]
