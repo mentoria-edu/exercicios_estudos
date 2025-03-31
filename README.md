@@ -40,3 +40,7 @@ mentoria_edu/
 - [Rerison](https://github.com/Rerison-git)
 - [Eduardo](https://github.com/eduardoliveirag)
 - [Luiz](https://github.com/luiz-vaz)
+
+## Link da Documentação:
+
+ - [link](https://www.notion.so/1c408c995dce8017827cf53f445a924d?v=1c408c995dce803eb025000cdbd98892)
