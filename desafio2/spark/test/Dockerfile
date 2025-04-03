@@ -1,40 +1,32 @@
-#FROM ubuntu:22.04 
-
 FROM eclipse-temurin:11-jre-jammy
 
-RUN apt update -y && \ 
-    apt upgrade -y && \
-    apt install -y \ 
+ARG LINK_DOWNLOAD_SPARK='https://dlcdn.apache.org/spark/spark-3.5.5/spark-3.5.5-bin-hadoop3.tgz'
+ARG SPARK_FOLDER_NAME='spark-3.5.5-bin-hadoop3.tgz'
+
+ENV SPARK_HOME="/opt/spark"
+ENV SPARK_MODE="master"
+ENV PATH="${SPARK_HOME}/sbin:${SPARK_HOME}/bin:${PATH}"
+
+RUN apt update -y && \
+    apt install -y --no-install-recommends \
+    python3 \
     rsync \
     wget \
     ssh \
-    tini \ 
-    krb5-user \ 
-    libnss3 \ 
-    net-tools 
+    tini \
+    krb5-user \
+    libnss3  \
+    net-tools && \
+    rm -rf /var/lib/apt/lists/*
 
-
-ENV SPARK_HOME=${SPARK_HOME:-"/opt/spark"}
-ENV HADOOP_HOME=${HADOOP_HOME:-"/opt/hadoop"}
-
-RUN mkdir -p ${HADOOP_HOME} && mkdir -p ${SPARK_HOME}
-
-
-RUN wget https://dlcdn.apache.org/spark/spark-3.5.5/spark-3.5.5-bin-hadoop3.tgz
-
-RUN tar xvf spark-3.5.5-bin-hadoop3.tgz && \
-    mv spark-3.5.5-bin-hadoop3/* /opt/spark && \
-    rm -r spark-3.5.5-bin-hadoop3.tgz
-
-
-ENV SPARK_MODE="master"
-ENV PATH="/opt/spark/sbin:/opt/spark/bin:${PATH}"
-
-
+RUN mkdir -p ${SPARK_HOME} && \
+    mkdir -p ${SPARK_HOME}/spark-events && \
+    wget -q ${LINK_DOWNLOAD_SPARK} -O ${SPARK_HOME}/${SPARK_FOLDER_NAME} && \
+    tar xzf ${SPARK_HOME}/${SPARK_FOLDER_NAME} -C ${SPARK_HOME} --strip-components=1 && \
+    rm -f ${SPARK_HOME}/${SPARK_FOLDER_NAME}
+    
 COPY entrypoint.sh /opt/spark/conf/entrypoint.sh
 COPY spark-env.sh /opt/spark/conf/spark-env.sh
 COPY spark-defaults.conf /opt/spark/conf/spark-defaults.conf
 
-RUN mkdir -p /opt/spark/spark-events
-
-ENTRYPOINT [ "bash", "-c", "/opt/spark/bin/spark-submit --master spark://spark-master:7077 --deploy-mode client /opt/spark/examples/src/main/python/pi.py" ]
+ENTRYPOINT [ "bash", "-c", "${SPARK_HOME}/bin/spark-submit --master spark://spark-master:7077 --deploy-mode client ${SPARK_HOME}/examples/src/main/python/pi.py" ]

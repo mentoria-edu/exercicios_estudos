@@ -1,15 +1,14 @@
 services:
   spark-master:
     build: .
-    container_name: spark-master
     environment:
       - SPARK_MODE=master
     volumes:
-      - ./spark-logs:/opt/spark/spark-events
+      - ./spark-logs:${SPARK_EVENTS}
     ports:
-      - "5186:5186"   # UI do Spark Master
-      - "7077:7077"   # Porta de comunicação do Master com os Workers
-      - "4040:4040"   # Porta de Monitoramento
+      - "5186:5186"  
+      - "7077:7077"   
+      - "4040:4040"   
     networks:
       - spark-net
 
@@ -18,9 +17,9 @@ services:
     environment:
       - SPARK_MODE=worker
     volumes:
-      - ./spark-logs:/opt/spark/spark-events
+      - ./spark-logs:${SPARK_EVENTS}
     ports:
-      - "5187:5187"   # UI do Spark Worker
+      - "5187:5187"  
       - "4041:4040"
     networks:
       - spark-net
@@ -32,7 +31,7 @@ services:
     environment:
       - SPARK_MODE=history
     volumes:
-      - ./spark-logs:/opt/spark/spark-events
+      - ./spark-logs:${SPARK_EVENTS}
     ports:
       - '18080:18080'  
     networks:
