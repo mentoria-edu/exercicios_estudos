@@ -4,7 +4,7 @@ services:
     environment:
       - SPARK_MODE=master
     volumes:
-      - ./spark-logs:${SPARK_EVENTS}
+      - ./spark-logs:${SPARK_EVENTS_DIR}
     ports:
       - "5186:5186"  
       - "7077:7077"   
@@ -17,7 +17,7 @@ services:
     environment:
       - SPARK_MODE=worker
     volumes:
-      - ./spark-logs:${SPARK_EVENTS}
+      - ./spark-logs:${SPARK_EVENTS_DIR}
     ports:
       - "5187:5187"  
       - "4041:4040"
@@ -29,9 +29,9 @@ services:
   spark-history:
     build: .
     environment:
-      - SPARK_MODE=history
+      - SPARK_MODE=history 
     volumes:
-      - ./spark-logs:${SPARK_EVENTS}
+      - ./spark-logs:${SPARK_EVENTS_DIR}
     ports:
       - '18080:18080'  
     networks:
