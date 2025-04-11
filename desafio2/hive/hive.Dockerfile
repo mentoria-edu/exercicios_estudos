@@ -38,4 +38,6 @@ COPY hive-site.xml $HIVE_HOME/conf
 
 EXPOSE 9083
 
-CMD ["/bin/bash", "-c", "hive --metastore && tail -f /dev/null"]
+COPY entrypoint.sh /etc/entrypoint.sh
+
+ENTRYPOINT ["sh", "/etc/entrypoint.sh"]
