@@ -1,33 +1,40 @@
-def display_menu():
-    print("=== Menu Inicial ===")
-    print("1. Opção 1 - Descrição da opção 1")
-    print("2. Opção 2 - Descrição da opção 2")
-    print("3. Opção 3 - Descrição da opção 3")
-    print("4. Sair")
+def show_display_menu():
+    print("=== Menu ===")
+    print("1. Add Contact")
+    print("2. View Contacts")
+    print("3. Search Contact")
+    print("4. Update Contact")
+    print("5. Delete Contact")
+    print("6. Exit")
     print("====================")
 
+def execute_option():
+    choice = input("Enter your choice: ")
 
-def menu_options():
+    match choice:
+        case '1':
+            print("Adding Contact...")
+            return False        
+        case '2':
+            print("Viewing Contact...")
+            return False        
+        case '3':
+            print("Searching Contact...")
+            return False
+        case '4':
+            print("Updating Contact...")
+            return False
+        case '5':
+            print("Deleting Contact...")
+            return False
+        case '6':
+            return True
+        case _:
+            print("Invalid option, check the options in the menu below")
+            return False
+
+def run_menu():        
     while True:
-        choice = input("Enter your choice: ")
-        
-        if choice == '1':
-            print("Adding a contact...")
-            # Add contact logic here
-        elif choice == '2':
-            print("Viewing contacts...")
-            # View contacts logic here
-        elif choice == '3':
-            print("Searching for a contact...")
-            # Search contact logic here
-        elif choice == '4':
-            print("Deleting a contact...")
-            # Delete contact logic here
-        elif choice == '5':
-            print("Exiting the program.")
+        show_display_menu()
+        if execute_option():
             break
-
-
-def run_menu():
-    display_menu()
-    menu_options()
