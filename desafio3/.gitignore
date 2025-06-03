@@ -66,3 +66,4 @@ typecheck/
 cython_debug/
 
 *.db
+test_crud.py
