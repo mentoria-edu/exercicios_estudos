@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS Agenda (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    `name` TEXT NOT NULL,
+    tel_number TEXT,
+    email TEXT
+);

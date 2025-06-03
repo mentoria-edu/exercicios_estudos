@@ -1,4 +1,6 @@
 from src.menu.menu import run_menu
 
 run_menu()
-g0
+# g0
+
+
