@@ -7,6 +7,6 @@ def insert_phone() -> str:
 
     phone = input("Telefone: ")
     if not phone.isdigit() or len(phone) != 8:
-        raise ValueError("O telefone deve ter oito dígitos.")
+        raise ValueError("O telefone precisa deve ter oito dígitos.")
 
     return str(area_code) + str(phone)
