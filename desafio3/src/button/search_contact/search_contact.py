@@ -1,4 +1,3 @@
-
 def search_for_a_contact():
     search = input("Buscar: ")
 
