@@ -1,5 +1,4 @@
-
-def create_contact() -> tuple:
+def create_contact() -> tuple[str, str, str]:
     contact_informations = list()
     contact_informations.append(insert_name())
     contact_informations.append(insert_phone())
