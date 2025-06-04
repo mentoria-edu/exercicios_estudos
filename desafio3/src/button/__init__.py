@@ -12,4 +12,4 @@ contact_informations.append(insert_phone())
 contact_informations.append(insert_email())
 
 
-print(tuple(contact_informations))
+tuple(contact_informations)
