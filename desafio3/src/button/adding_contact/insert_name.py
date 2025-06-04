@@ -1,5 +1,3 @@
-
-
 def insert_name() -> str:
     name = input("Nome: ")
 
