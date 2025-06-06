@@ -29,37 +29,35 @@ def show_contact():
 @app.route("/adding_contact", methods=["POST"])
 @spec.validate(body=Request(Contact), resp=Response(HTTP_200=Contact))
 def adding_contact():
-    """Insere uma pessoa na agenda"""
-    "função do sqlite insert -(body)"
+    """Add a person to the calendar"""
     return body
 
 
 @app.route("/viewing_contacts", methods=["GET"])
 @spec.validate(resp=Response(HTTP_200=Contact))
 def viewing_contacts():
-    """retorna todos os contatos da agenda"""
-    return "função do sqlite 'quary' para trazer todos os contatos"
+    """returns all contacts in the phonebook"""
+    return jsonify(data_test)
 
 
 @app.route("/contact/<string:name>", methods=["GET"])
 @spec.validate(body=Request(Contact), resp=Response(HTTP_200=Contact))
 def searching_contact(name):
-    """retorna um contato selecionado pelo usuario da agenda"""
-    "quary sqlite update usando body e name do banco == name)"
+    """returns a contact selected by the user from the phonebook"""
     return jsonify(data_test)
 
 
 @app.route("/update_contact/<string:name>", methods=["PATCH"])
 @spec.validate(body=Request(Contact), resp=Response(HTTP_200=Contact))
 def update_contact():
-    """quary para alterar contato selecionado pelo usuario da agenda"""
+    """quary to change contact selected by user from phonebook"""
     return
 
 
 @app.route("/deleting_contact/<string:name>", methods=["DELETE"])
 @spec.validate(resp=Response(HTTP_200=Contact))
 def deleting_contact():
-    """quary para deletar contato selecionado pelo usuario da agenda"""
+    """quary to delete contact selected by the user from the phonebook"""
     return
 
 
