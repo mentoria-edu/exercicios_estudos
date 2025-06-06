@@ -1,3 +1,1 @@
-"""menu package initializer."""
-
-from .menu import *
+from .menu import run_menu
