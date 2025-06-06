@@ -1,6 +1,6 @@
-CREATE TABLE IF NOT EXISTS Agenda (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+CREATE TABLE IF NOT EXISTS Book (
+    contact_id INTEGER PRIMARY KEY AUTOINCREMENT,
     `name` TEXT NOT NULL,
-    tel_number TEXT,
+    phone_number TEXT NOT NULL,
     email TEXT
 );
