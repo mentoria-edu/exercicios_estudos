@@ -1,46 +1,67 @@
-from flask import Flask, jsonify
-from flask_pydantic_spec import FlaskPydanticSpec, Response
+from flask import Flask, jsonify, request, redirect, url_for
+from flask_pydantic_spec import FlaskPydanticSpec, Response, Request
 from pydantic import BaseModel
 
 
+data_test = {"id": 1, "name": "John Doe", "phone": 9878997, "email":"email@exemplo"}
+
 app = Flask(__name__)
-spec = FlaskPydanticSpec('flask', title='Agenda', version="v1.0", path="/apidoc", servers="http://localhost:8080/proxy/5000/apidoc/openapi.json")
+spec = FlaskPydanticSpec('flask', title='Agenda', version="v1.0", servers="http://localhost:8080/proxy/5000/apidoc/openapi.json")
+
 
 class Contact(BaseModel):
-    id: int
-    name: str
-    phone: int
-    email: str
+    id : int
+    name : str
+    phone : int
+    email : str
+
 
 @app.route("/", methods=["GET"])
-@spec.validate(resp=Response(HTTP_200=Contact))
-def show_menu():
-    return jsonify([{"id": 1, "name": "John Doe", "phone": 9878997, "email":"email@exemplo"}])
+def show_swagger():
+    return redirect('http://localhost:8080/proxy/5000/apidoc/swagger')
+
+
+@app.route("/contact", methods=["GET"])
+def show_contact():
+    return jsonify(data_test)
+
 
 @app.route("/adding_contact", methods=["POST"])
-@spec.validate(resp=Response(HTTP_200=Contact))
+@spec.validate(body=Request(Contact), resp=Response(HTTP_200=Contact))
 def adding_contact():
-    return jsonify([{"id": 1, "name": "John Doe", "phone": 9878997, "email":"email@exemplo"}])
+    """Insere uma pessoa na agenda"""
+    "função do sqlite insert -(body)"
+    return body
+
 
 @app.route("/viewing_contacts", methods=["GET"])
 @spec.validate(resp=Response(HTTP_200=Contact))
 def viewing_contacts():
-    return jsonify([{"id": 1, "name": "John Doe", "phone": 9878997, "email":"email@exemplo"}])
+    """retorna todos os contatos da agenda"""
+    return "função do sqlite 'quary' para trazer todos os contatos"
 
-@app.route("/searching_contact", methods=["GET"])
-@spec.validate(resp=Response(HTTP_200=Contact))
-def searching_contact():
-    return jsonify([{"id": 1, "name": "John Doe", "phone": 9878997, "email":"email@exemplo"}])
 
-@app.route("/update_contact", methods=["PATCH"])
-@spec.validate(resp=Response(HTTP_200=Contact))
+@app.route("/contact/<string:name>", methods=["GET"])
+@spec.validate(body=Request(Contact), resp=Response(HTTP_200=Contact))
+def searching_contact(name):
+    """retorna um contato selecionado pelo usuario da agenda"""
+    "quary sqlite update usando body e name do banco == name)"
+    return jsonify(data_test)
+
+
+@app.route("/update_contact/<string:name>", methods=["PATCH"])
+@spec.validate(body=Request(Contact), resp=Response(HTTP_200=Contact))
 def update_contact():
-    return jsonify([{"id": 1, "name": "John Doe", "phone": 9878997, "email":"email@exemplo"}])
+    """quary para alterar contato selecionado pelo usuario da agenda"""
+    return
 
-@app.route("/deleting_contact", methods=["DELETE"])
+
+@app.route("/deleting_contact/<string:name>", methods=["DELETE"])
 @spec.validate(resp=Response(HTTP_200=Contact))
 def deleting_contact():
-    return jsonify([{"id": 1, "name": "John Doe", "phone": 9878997, "email":"email@exemplo"}])
+    """quary para deletar contato selecionado pelo usuario da agenda"""
+    return
+
 
 spec.register(app)
 
@@ -50,4 +71,4 @@ def serve_openapi():
 
 
 if __name__ == "__main__":
-    app.run(debug=true)
+    app.run(debug=True)
