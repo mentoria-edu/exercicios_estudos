@@ -3,8 +3,8 @@ import logging
 
 
 DEFAULT_DB_NAME = "model.db"
-DEFAULT_INITIALIZE_SCRIPT = "src/model/sql/init_tables.sql"
-DEFAULT_TABLE_NAME="Book"
+DEFAULT_INITIALIZE_SCRIPT = "src/model/sql/book.sql"
+DEFAULT_TABLE_NAME="book"
 DEFAULT_FIELD_ID_NAME="contact_id"
 
 
