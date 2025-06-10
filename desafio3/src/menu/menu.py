@@ -1,3 +1,6 @@
+from src.button.button import get_contact_information
+from src.model.model import insert_database_row
+
 def display_menu():
     print("=== Menu Inicial ===")
     print("1. Opção 1 - Descrição da opção 1")
@@ -13,7 +16,8 @@ def menu_options():
         
         if choice == '1':
             print("Adding a contact...")
-            # Add contact logic here
+            contact_information = get_contact_information()
+            insert_database_row(contact_information)
         elif choice == '2':
             print("Viewing contacts...")
             # View contacts logic here
@@ -21,7 +25,7 @@ def menu_options():
             print("Searching for a contact...")
             # Search contact logic here
         elif choice == '4':
-            print("Deleting a contact...")
+            print("Dceleting a ontact...")
             # Delete contact logic here
         elif choice == '5':
             print("Exiting the program.")
