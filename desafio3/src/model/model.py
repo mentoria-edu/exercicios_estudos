@@ -1,5 +1,4 @@
 import sqlite3
-from typing import Any
 import logging
 
 
@@ -9,7 +8,31 @@ DEFAULT_TABLE_NAME="Book"
 DEFAULT_FIELD_ID_NAME="contact_id"
 
 
-def open_sql_script_file(file_path: str) -> str:
+def execute_sql_script(
+    db_name: str = DEFAULT_DB_NAME,
+    path_sql_script: str = DEFAULT_INITIALIZE_SCRIPT,
+    parameters: tuple[str,...] = ()
+) -> None:
+    '''
+    Execute a sql script 
+
+    Parameters
+    ----------
+    - `db_name`: String containing the name of the database to connect
+    - `path`: The path contains a sql script file
+
+    Returns
+    -------
+    - None
+    '''
+    _execute_query(
+        query=_open_sql_script_file(path_sql_script),
+        db_name=db_name,
+        parameters=parameters
+    )
+
+
+def _open_sql_script_file(file_path: str) -> str:
     '''
     Open a sql file and return its contents as a string
 
@@ -23,28 +46,6 @@ def open_sql_script_file(file_path: str) -> str:
     ''' 
     with open(file_path, 'r') as sql_script_file:
         return sql_script_file.read()
-
-
-def create_db_if_not_exist(
-    db_name: str = DEFAULT_DB_NAME,
-    path_sql_script: str = DEFAULT_INITIALIZE_SCRIPT
-) -> None:
-    '''
-    Creates an SQLite database if it doesn't exist from an sql script 
-
-    Parameters
-    ----------
-    - `db_name`: String containing the name of the database to connect
-    - `path`: The path contains a sql script file
-
-    Returns
-    -------
-    - None
-    '''
-    _execute_query(
-        query=open_sql_script_file(path_sql_script),
-        db_name=db_name
-    )
 
 
 def insert_database_row(
@@ -257,6 +258,7 @@ def _execute_query(
     -------
     - `result`: String containing the result of the query
     '''
+
     with sqlite3.connect(db_name) as connector: 
         cursor = connector.cursor()
         result = cursor.execute(query, parameters)
