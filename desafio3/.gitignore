@@ -64,3 +64,6 @@ typecheck/
 
 # Cython debug symbols
 cython_debug/
+
+# Database Files
+*.db
