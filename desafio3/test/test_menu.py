@@ -1,58 +1,57 @@
 import pytest
-from src.menu import get_field_search, get_search_contact, menu_loop
+from src.menu import  _choose_field_to_search, select_search_contact, menu_loop, unique_choose_loop
+
+QUIT_OPTION = 'q'
+KEEP_LOOP = 'keep'
 
 
-def test_menu_loop_breaks():
+def test_choose_field_to_search_invalid_options(monkeypatch, caplog):
+    input_value= ['x', 'banana', '8', '3']
+
+    monkeypatch.setattr("builtins.input", lambda _: input_value.pop(0))
+
+    with caplog.at_level('WARNING'):
+        _choose_field_to_search()
+        
+        assert caplog.text.count("Invalid option") == 3
+
+
+@pytest.mark.parametrize("input_field, expected_field, search_input, expected_value", [
+    ('1', 'name', 'Rodrigo', 'Rodrigo'),
+    ('2', 'phone', '123456789', '123456789'),
+    ('3', 'email', 'test@example.com', 'test@example.com'),    
+])
+def test_select_search_contact_expected_value(monkeypatch, input_field, expected_field, search_input, expected_value):
+    inputs = [input_field, search_input]
+    monkeypatch.setattr("builtins.input", lambda _: inputs.pop(0))
+
+    field, value = select_search_contact()
+
+    assert field == expected_field
+    assert value == expected_value
+
+
+def test_menu_loop_breaks(monkeypatch):
     menu_iterations = 0
-    
-    @menu_loop
-    def mock_function():
+
+    def mock_input(prompt):
 
         nonlocal menu_iterations
 
         menu_iterations += 1
 
         if menu_iterations == 3:
-            return '9'
-        
+            return QUIT_OPTION
+
+        return '1'
+    
+    monkeypatch.setattr('builtins.input', mock_input)
+
+    @menu_loop()
+    def mock_function(choice):
         return 'continue'
     
-    result = mock_function()
-
-    assert result == '9'
-    assert menu_iterations == 3
-
-
-@pytest.mark.parametrize("input_value, expected", [
-    ('1', 'name'),
-    ('2', 'phone'),
-    ('3', 'email'),
-])
-def test_get_field_searches_expected_output(monkeypatch, input_value, expected):
-    monkeypatch.setattr("builtins.input", lambda _: input_value)
-
-    result = get_field_search()
-
-    assert result == expected
-
-
-def test_get_field_searches_invalid_options(monkeypatch, caplog):
-    input_value= ['x', 'banana', '8', '3']
-
-    monkeypatch.setattr("builtins.input", lambda _: input_value.pop(0))
-
-    with caplog.at_level('WARNING'):
-        get_field_search()
+    mock_function()
         
-        assert caplog.text.count("Invalid option") == 3
-
-
-def test_get_search_contact_value_no_space(monkeypatch):
-    inputs = ['1', '  Rodrigo  ']
-
-    monkeypatch.setattr("builtins.input", lambda _: inputs.pop(0))
-    field, value = get_search_contact()
-
-    assert field == 'name'
-    assert value == 'Rodrigo'
+    assert menu_iterations == 3
  

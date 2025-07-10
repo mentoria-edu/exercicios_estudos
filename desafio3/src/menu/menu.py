@@ -9,16 +9,17 @@ KEEP_LOOP = 'keep'
 def menu_loop(display_func=None):
     def decorator(func):
         @wraps(func)
-        def wrapper(*args, **kwargs):          
+        def wrapper(*args, **kwargs):
             while True:
-                display_func()
+                if display_func:
+                    display_func()
 
                 choice = input(f"Enter your choice (or '{QUIT_OPTION}' to quit/return): ").strip()
 
                 if choice == QUIT_OPTION:
                     break
 
-                func(choice, *args, **kwargs)                                           
+                func(choice, *args, **kwargs)                                      
 
         return wrapper
     
@@ -27,14 +28,15 @@ def menu_loop(display_func=None):
 def unique_choose_loop(display_func=None):
     def decorator(func):
         @wraps(func)
-        def wrapper(*args, **kwargs):            
+        def wrapper(*args, **kwargs):     
             while True:
-                display_func()                
+                if display_func:
+                    display_func()            
 
                 result = func(*args, **kwargs)
 
-                if result != KEEP_LOOP:                    
-                    return result                                   
+                if result != KEEP_LOOP:               
+                    return result                             
 
         return wrapper
     
@@ -62,32 +64,32 @@ def show_display_choose_field_to_search():
     logger.info("=== Select the field to search by ====")
     logger.info("1. Name")
     logger.info("2. Phone")
-    logger.info("3. E-mail")  
+    logger.info("3. E-mail")
     logger.info("==============")
 
 
 @menu_loop(display_func=show_display_main_menu)
-def execute_main_menu(choice) -> str:  
+def execute_main_menu(choice):
     match choice:
-        case '1':            
+        case '1':
             logger.info("Adding Contact...")
         case '2':
-            logger.info("Viewing Contact...")                    
+            logger.info("Viewing Contact...")                
         case '3':
             logger.info("Selecting Contact...")
-            select_search_contact()           
-            execute_contact_submenu()        
+            select_search_contact()
+            execute_contact_submenu()
         case _:
             logger.warning("Invalid option, check the options in the menu below")
                         
 
 @menu_loop(display_func=show_display_contact_submenu)
-def execute_contact_submenu(choice) -> str:
+def execute_contact_submenu(choice):
     match choice:
         case '1':
-            logger.info("1. Update Contact")                  
+            logger.info("1. Update Contact")         
         case '2':
-            logger.info("2. Delete Contact")            
+            logger.info("2. Delete Contact")    
         case _:
             logger.warning("Invalid option, check the options in the menu below")
 
@@ -97,13 +99,13 @@ def _choose_field_to_search() -> str:
 
     choice = input("Choice: ")
 
-    match choice:            
+    match choice:        
         case '1':
             return 'name'
         case '2':
-            return 'phone'             
+            return 'phone'         
         case '3':
-            return 'email'      
+            return 'email'
         case _:
             logger.warning("Invalid option, check the options in the menu below")
             return KEEP_LOOP
