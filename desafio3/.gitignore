@@ -67,3 +67,8 @@ cython_debug/
 
 # Database Files
 *.db
+
+# Jupyter files
+*.ipynb_checkpoints
+*.ipynb
+*.ipy 
